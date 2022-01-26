@@ -19,7 +19,7 @@ Route::prefix('/user')->group(function(){
     Route::post('/register', 'App\Http\Controllers\LoginController@register');
     Route::middleware(['auth:api'])->group(function () {
         Route::post('/deposit', 'App\Http\Controllers\WalletController@deposit');
-        Route::post('/pay', 'App\Http\Controllers\WalletController@deposit');
+        Route::post('/pay', 'App\Http\Controllers\WalletController@pay');
     });
 });
 
