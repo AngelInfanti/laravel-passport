@@ -1,0 +1,271 @@
+{
+	"info": {
+		"_postman_id": "b24056d8-9dea-40d2-b954-20feee27e515",
+		"name": "test-laravel-passport",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"angelinfanti@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/user/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Angel Infanti\",\r\n    \"email\": \"angelinfanti@gmail.com\",\r\n    \"phone\": 123456,\r\n    \"password\": \"123456\",\r\n    \"confirm_password\": \"123456\",\r\n    \"document\": 987654\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/user/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deposit",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYmY5MzA5NTZiOGE2YmE0MDVmYTMwMjUwNGNkNzZhZThmYzkxNzVhMThhYmFhZjM5MzYxZWFlOTNlYTY1MDM2NTU2NTg4YzFlNWU2NWQ0MzQiLCJpYXQiOjE2NDMyNjYwMTAuNzEwMDUxLCJuYmYiOjE2NDMyNjYwMTAuNzEwMDU1LCJleHAiOjE2NzQ4MDIwMTAuNzA1NzUyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.YOjUu1TBXApf1i15THyrIYEyDNhguhoq3BspRGIQiphfpLbVtOqUVJTdyy8S8p6kyTsAvsOqfXdyASkTpdmqLF9D3jhJKiciWUw4Nkcnm24dHzdAMni3W2FpRIVnR1sqd1Xic1Ju61sSPAAGa7EBVCKE0OGmS5dgeyQm0dCsPJdntObzdTaID9onqs6EhQktpuNW6oVrvor_n537CpMcTppxy1GrlbmMwwk9PY6gdI8BDfx49pA2ZNKRg35yJ0k_CIru-tJdcjG3oFynqS8BvPfDh40xNDYVDjC-VsiBIhn50xLkFqDeQysmLYIorImmiDOxwzhmw67GJMzM29_iIJlsJyzU5qT_8eZr_ib3MYiqusUhJSQB3HF9advzWLMaUkmA7PcL22z5PyJp9vy040ClComOtnUZxYcFwu-N58mVBO4VTp2FietAUHv8ortIfyUuat7kwc0gc99x0EbhKpT_GMN3GPOy5J9hvPMMonHzZkMvswNBu94qfdTpteK4YjxjxJjlTuqgzxAFR0yTlmsIZdzS339XLC4JbPkMOkgKIdwQAUQ6kyeS6sWh5GRDNzL7A0wqQQMaRPTOIwJ_Khp_jrH_cfjR_hryJ-_nsV9dcu-H4apRIbJE2u_SnZdrQAVbM2Qc554CW8TFTrzFoIjAi6GeOT3j0z6xPx6R3uQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phone\": 123456,\r\n    \"document\": 987654,\r\n    \"amount\": 3000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/user/deposit",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"user",
+						"deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConfirmPay",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYmY5MzA5NTZiOGE2YmE0MDVmYTMwMjUwNGNkNzZhZThmYzkxNzVhMThhYmFhZjM5MzYxZWFlOTNlYTY1MDM2NTU2NTg4YzFlNWU2NWQ0MzQiLCJpYXQiOjE2NDMyNjYwMTAuNzEwMDUxLCJuYmYiOjE2NDMyNjYwMTAuNzEwMDU1LCJleHAiOjE2NzQ4MDIwMTAuNzA1NzUyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.YOjUu1TBXApf1i15THyrIYEyDNhguhoq3BspRGIQiphfpLbVtOqUVJTdyy8S8p6kyTsAvsOqfXdyASkTpdmqLF9D3jhJKiciWUw4Nkcnm24dHzdAMni3W2FpRIVnR1sqd1Xic1Ju61sSPAAGa7EBVCKE0OGmS5dgeyQm0dCsPJdntObzdTaID9onqs6EhQktpuNW6oVrvor_n537CpMcTppxy1GrlbmMwwk9PY6gdI8BDfx49pA2ZNKRg35yJ0k_CIru-tJdcjG3oFynqS8BvPfDh40xNDYVDjC-VsiBIhn50xLkFqDeQysmLYIorImmiDOxwzhmw67GJMzM29_iIJlsJyzU5qT_8eZr_ib3MYiqusUhJSQB3HF9advzWLMaUkmA7PcL22z5PyJp9vy040ClComOtnUZxYcFwu-N58mVBO4VTp2FietAUHv8ortIfyUuat7kwc0gc99x0EbhKpT_GMN3GPOy5J9hvPMMonHzZkMvswNBu94qfdTpteK4YjxjxJjlTuqgzxAFR0yTlmsIZdzS339XLC4JbPkMOkgKIdwQAUQ6kyeS6sWh5GRDNzL7A0wqQQMaRPTOIwJ_Khp_jrH_cfjR_hryJ-_nsV9dcu-H4apRIbJE2u_SnZdrQAVbM2Qc554CW8TFTrzFoIjAi6GeOT3j0z6xPx6R3uQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_session\": \"bf930956b8a6ba405fa302504cd76ae8fc9175a18abaaf39361eae93ea65036556588c1e5e65d434\",\r\n    \"token_email\": \"R9Dycz\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/user/confirmPay",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"user",
+						"confirmPay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pay",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYmY5MzA5NTZiOGE2YmE0MDVmYTMwMjUwNGNkNzZhZThmYzkxNzVhMThhYmFhZjM5MzYxZWFlOTNlYTY1MDM2NTU2NTg4YzFlNWU2NWQ0MzQiLCJpYXQiOjE2NDMyNjYwMTAuNzEwMDUxLCJuYmYiOjE2NDMyNjYwMTAuNzEwMDU1LCJleHAiOjE2NzQ4MDIwMTAuNzA1NzUyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.YOjUu1TBXApf1i15THyrIYEyDNhguhoq3BspRGIQiphfpLbVtOqUVJTdyy8S8p6kyTsAvsOqfXdyASkTpdmqLF9D3jhJKiciWUw4Nkcnm24dHzdAMni3W2FpRIVnR1sqd1Xic1Ju61sSPAAGa7EBVCKE0OGmS5dgeyQm0dCsPJdntObzdTaID9onqs6EhQktpuNW6oVrvor_n537CpMcTppxy1GrlbmMwwk9PY6gdI8BDfx49pA2ZNKRg35yJ0k_CIru-tJdcjG3oFynqS8BvPfDh40xNDYVDjC-VsiBIhn50xLkFqDeQysmLYIorImmiDOxwzhmw67GJMzM29_iIJlsJyzU5qT_8eZr_ib3MYiqusUhJSQB3HF9advzWLMaUkmA7PcL22z5PyJp9vy040ClComOtnUZxYcFwu-N58mVBO4VTp2FietAUHv8ortIfyUuat7kwc0gc99x0EbhKpT_GMN3GPOy5J9hvPMMonHzZkMvswNBu94qfdTpteK4YjxjxJjlTuqgzxAFR0yTlmsIZdzS339XLC4JbPkMOkgKIdwQAUQ6kyeS6sWh5GRDNzL7A0wqQQMaRPTOIwJ_Khp_jrH_cfjR_hryJ-_nsV9dcu-H4apRIbJE2u_SnZdrQAVbM2Qc554CW8TFTrzFoIjAi6GeOT3j0z6xPx6R3uQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 2000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/user/pay",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"user",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assets",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYmY5MzA5NTZiOGE2YmE0MDVmYTMwMjUwNGNkNzZhZThmYzkxNzVhMThhYmFhZjM5MzYxZWFlOTNlYTY1MDM2NTU2NTg4YzFlNWU2NWQ0MzQiLCJpYXQiOjE2NDMyNjYwMTAuNzEwMDUxLCJuYmYiOjE2NDMyNjYwMTAuNzEwMDU1LCJleHAiOjE2NzQ4MDIwMTAuNzA1NzUyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.YOjUu1TBXApf1i15THyrIYEyDNhguhoq3BspRGIQiphfpLbVtOqUVJTdyy8S8p6kyTsAvsOqfXdyASkTpdmqLF9D3jhJKiciWUw4Nkcnm24dHzdAMni3W2FpRIVnR1sqd1Xic1Ju61sSPAAGa7EBVCKE0OGmS5dgeyQm0dCsPJdntObzdTaID9onqs6EhQktpuNW6oVrvor_n537CpMcTppxy1GrlbmMwwk9PY6gdI8BDfx49pA2ZNKRg35yJ0k_CIru-tJdcjG3oFynqS8BvPfDh40xNDYVDjC-VsiBIhn50xLkFqDeQysmLYIorImmiDOxwzhmw67GJMzM29_iIJlsJyzU5qT_8eZr_ib3MYiqusUhJSQB3HF9advzWLMaUkmA7PcL22z5PyJp9vy040ClComOtnUZxYcFwu-N58mVBO4VTp2FietAUHv8ortIfyUuat7kwc0gc99x0EbhKpT_GMN3GPOy5J9hvPMMonHzZkMvswNBu94qfdTpteK4YjxjxJjlTuqgzxAFR0yTlmsIZdzS339XLC4JbPkMOkgKIdwQAUQ6kyeS6sWh5GRDNzL7A0wqQQMaRPTOIwJ_Khp_jrH_cfjR_hryJ-_nsV9dcu-H4apRIbJE2u_SnZdrQAVbM2Qc554CW8TFTrzFoIjAi6GeOT3j0z6xPx6R3uQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/user/assets?document=987654&phone=123456",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"user",
+						"assets"
+					],
+					"query": [
+						{
+							"key": "document",
+							"value": "987654"
+						},
+						{
+							"key": "phone",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

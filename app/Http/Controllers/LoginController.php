@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -14,7 +15,9 @@ class LoginController extends Controller
 
         if (!Auth::attempt($credentials)){
             return response([
-                "message" => "Usuario y/o contraseña es invalido"
+                "message" => "Usuario y/o contraseña es invalido",
+                "success" => false,
+                "request_code"=> 401
             ], 401);
         }
 
@@ -22,8 +25,10 @@ class LoginController extends Controller
 
         return response([
             "user" => Auth::user(),
-            "acces_token" => $accessToken
-        ]);
+            "acces_token" => $accessToken,
+            "success" => true,
+            "request_code"=> 401
+        ], 200);
     }
 
     public function register(Request $request){
@@ -39,19 +44,31 @@ class LoginController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'error'=>$validator->errors(),
-                "success" => false
+                "success" => false,
+                "request_code"=> 422
             ], 422);
         }
 
-        $input = $request->all();
-        $input['password'] = bcrypt($request->get('password'));
-        $user = User::create($input);
-        $token =  $user->createToken('MyApp')->accessToken;
+        try {
+            $input = $request->all();
+            $input['password'] = bcrypt($request->get('password'));
+            $user = User::create($input);
+            $token =  $user->createToken('MyApp')->accessToken;
 
-        return response()->json([
-            'token' => $token,
-            'user' => $user,
-            'success' => true
-        ], 200);
+            return response()->json([
+                'token' => $token,
+                'user' => $user,
+                'success' => true,
+                "request_code"=> 200
+            ], 200);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return response()->json([
+                'error'=>'Error al registrar al usuario',
+                "success" => false,
+                "request_code"=> 500
+            ], 500);
+        }
+
     }
 }

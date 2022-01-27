@@ -26,7 +26,8 @@ class WalletController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'error'=>$validator->errors(),
-                "success" => false
+                "success" => false,
+                "request_code"=> 422
             ], 422);
         }
 
@@ -35,7 +36,8 @@ class WalletController extends Controller
 
         return response()->json([
             "amount"=> $user->amount,
-            "success" => true
+            "success" => true,
+            "request_code"=> 200
         ], 200);
     }
 
@@ -49,7 +51,8 @@ class WalletController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'error'=>$validator->errors(),
-                "success" => false
+                "success" => false,
+                "request_code"=> 422
             ], 422);
         }
 
@@ -57,18 +60,21 @@ class WalletController extends Controller
         $user = User::find($id);
 
         try {
+            //Se suma el saldo a la wallet
             $user->amount = $user->amount + $request->amount;
             if($user->save()){
                 return response()->json([
                     'mensaje'=>'Se ha actualizado el saldo en la wallet',
                     "amount"=> $user->amount,
-                    "success" => true
+                    "success" => true,
+                    "request_code"=> 200
                 ], 200);
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'error'=>'Error al actualizar el saldo en la wallet',
-                "success" => false
+                "success" => false,
+                "request_code"=> 500
             ], 500);
         }
 
@@ -81,7 +87,8 @@ class WalletController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'error'=>$validator->errors(),
-                "success" => false
+                "success" => false,
+                "request_code"=> 422
             ], 422);
         }
 
@@ -89,6 +96,7 @@ class WalletController extends Controller
             $id = Auth::user()->id;
             $user = User::find($id);
 
+            //Crea el registro en la tabla de historial de pagos
             $paymentHistory = new PaymentHistory;
             $paymentHistory->user_id = Auth::user()->id;
             $paymentHistory->token = Auth::user()->token()['id'];
@@ -104,14 +112,16 @@ class WalletController extends Controller
                     'mensaje'=>'Se ha creado la orden de pago, se envio un email para confirmar',
                     'id_session' => Auth::user()->token()['id'],
                     "amount"=> $paymentHistory->amount,
-                    "success" => true
+                    "success" => true,
+                    "request_code"=> 200
                 ], 200);
             }
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
             return response()->json([
                 'error'=>'Error al pagar el producto',
-                "success" => false
+                "success" => false,
+                "request_code"=> 500
             ], 500);
         }
 
@@ -126,7 +136,8 @@ class WalletController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'error'=>$validator->errors(),
-                "success" => false
+                "success" => false,
+                "request_code"=> 422
             ], 422);
         }
 
@@ -145,7 +156,8 @@ class WalletController extends Controller
             if($paymentHistory == null){
                 return response()->json([
                     'error'=> "Los codigos no concuerdan con ninguna compra",
-                    "success" => false
+                    "success" => false,
+                    "request_code"=> 422
                 ], 422);
             }
 
@@ -153,7 +165,8 @@ class WalletController extends Controller
             if($paymentHistory->user_id != $id){
                 return response()->json([
                     'error'=> "La compra no le pertenece al usuario",
-                    "success" => false
+                    "success" => false,
+                    "request_code"=> 422
                 ], 422);
             }
 
@@ -162,7 +175,8 @@ class WalletController extends Controller
             if($user->amount < $paymentHistory->amount){
                 return response()->json([
                     'error'=> "No tiene los fondos necesarios para esta compra. Porfavor Recargue",
-                    "success" => false
+                    "success" => false,
+                    "request_code"=> 422
                 ], 422);
             }
 
@@ -173,7 +187,8 @@ class WalletController extends Controller
             if ($user->save() and $paymentHistory->save()){
                 return response()->json([
                     'mensaje'=>'Se ha confirmado la compra y se ha descontado el dinero de su cuenta',
-                    "success" => true
+                    "success" => true,
+                    "request_code"=> 200
                 ], 200);
             }
 
@@ -181,7 +196,8 @@ class WalletController extends Controller
             Log::debug($th->getMessage());
             return response()->json([
                 'error'=>'Error al confirmar la compra',
-                "success" => false
+                "success" => false,
+                "request_code"=> 500
             ], 500);
         }
 
