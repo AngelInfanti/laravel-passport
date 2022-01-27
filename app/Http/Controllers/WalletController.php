@@ -16,6 +16,29 @@ use Illuminate\Support\Facades\Mail;
 
 class WalletController extends Controller
 {
+
+    public function Assets(Request $request){
+        $validator = Validator::make($request->all(), [
+            'document' => ['required', 'numeric', new isUserLogin],
+            'phone' => ['required', 'numeric', new isUserLogin],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error'=>$validator->errors(),
+                "success" => false
+            ], 422);
+        }
+
+        $id = Auth::user()->id;
+        $user = User::find($id);
+
+        return response()->json([
+            "amount"=> $user->amount,
+            "success" => true
+        ], 200);
+    }
+
     public function deposit(Request $request){
         $validator = Validator::make($request->all(), [
             'document' => ['required', 'numeric', new isUserLogin],
@@ -88,6 +111,76 @@ class WalletController extends Controller
             Log::debug($th->getMessage());
             return response()->json([
                 'error'=>'Error al pagar el producto',
+                "success" => false
+            ], 500);
+        }
+
+
+    }
+
+    public function confirmPay(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id_session' => ['required'],
+            'token_email' => ['required']
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'error'=>$validator->errors(),
+                "success" => false
+            ], 422);
+        }
+
+
+
+        try {
+            $id = Auth::user()->id;
+
+            //Se busca el registro en el historial de pago que coincida con los codigos
+            $paymentHistory = PaymentHistory::where([
+                'token'=> $request->get('id_session'),
+                'email_token'=> $request->get('token_email')
+            ])->first();
+
+            // Se valida de que exista algun registro
+            if($paymentHistory == null){
+                return response()->json([
+                    'error'=> "Los codigos no concuerdan con ninguna compra",
+                    "success" => false
+                ], 422);
+            }
+
+            //Se valida que la compra pertenesca al usuario loggeado
+            if($paymentHistory->user_id != $id){
+                return response()->json([
+                    'error'=> "La compra no le pertenece al usuario",
+                    "success" => false
+                ], 422);
+            }
+
+            //Se valida que el usuario cuente con los fondos suficientes para realizar la compra
+            $user = User::find($id);
+            if($user->amount < $paymentHistory->amount){
+                return response()->json([
+                    'error'=> "No tiene los fondos necesarios para esta compra. Porfavor Recargue",
+                    "success" => false
+                ], 422);
+            }
+
+            //Se descuenta el dinero y se actualiza el estatus del pago
+            $user->amount = $user->amount - $paymentHistory->amount;
+            $paymentHistory->pay = 1;
+
+            if ($user->save() and $paymentHistory->save()){
+                return response()->json([
+                    'mensaje'=>'Se ha confirmado la compra y se ha descontado el dinero de su cuenta',
+                    "success" => true
+                ], 200);
+            }
+
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return response()->json([
+                'error'=>'Error al confirmar la compra',
                 "success" => false
             ], 500);
         }

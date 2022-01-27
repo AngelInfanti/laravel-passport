@@ -18,8 +18,10 @@ Route::prefix('/user')->group(function(){
     Route::post('/login', 'App\Http\Controllers\LoginController@login');
     Route::post('/register', 'App\Http\Controllers\LoginController@register');
     Route::middleware(['auth:api'])->group(function () {
+        Route::get('/assets', 'App\Http\Controllers\WalletController@assets');
         Route::post('/deposit', 'App\Http\Controllers\WalletController@deposit');
         Route::post('/pay', 'App\Http\Controllers\WalletController@pay');
+        Route::post('/confirmPay', 'App\Http\Controllers\WalletController@confirmPay');
     });
 });
 

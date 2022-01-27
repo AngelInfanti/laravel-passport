@@ -27,15 +27,15 @@ class isUserLogin implements Rule
     public function passes($attribute, $value)
     {
         if($attribute == 'email'){
-            return Auth::user()->email === $value;
+            return Auth::user()->email == $value;
         }
 
         if($attribute == 'phone'){
-            return Auth::user()->phone === $value;
+            return Auth::user()->phone == $value;
         }
 
         if($attribute == 'document'){
-            return Auth::user()->document === $value;
+            return Auth::user()->document == $value;
         }
     }
 
@@ -46,6 +46,6 @@ class isUserLogin implements Rule
      */
     public function message()
     {
-        return 'El :attribute no es del usuario registrado';
+        return 'El :attribute no pertenece al usuario actual';
     }
 }
